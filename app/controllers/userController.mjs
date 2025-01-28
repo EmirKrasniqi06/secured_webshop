@@ -6,12 +6,12 @@ const getUsers = (req, res) => {
 
 // Fonction de création d'un utilisateur
 const createUser = (req, res) => {
-  res.json({ message: "Utilisateur créé" });
+  res.sendFile("view/register.html", { root: "./" });
 };
 
-// Fonction de login d'un utilisateur
+// Fonction de connection d'un utilisateur
 const loginUser = (req, res) => {
-  res.json({ message: "Utilisateur connecté" });
+  res.sendFile("view/login.html", { root: "./" });
 };
 
 // Export des fonctions
