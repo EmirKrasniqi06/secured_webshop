@@ -3,7 +3,7 @@ import userController from "../controllers/userController.mjs";
 
 const userRouter = express.Router();
 
-userRouter.get("/", userController.getUsers);
+userRouter.get("/user", userController.authReq);
 
 userRouter.get("/register", userController.createUser);
 
