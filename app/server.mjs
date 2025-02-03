@@ -1,10 +1,15 @@
-// Importer les modules
-import express from "express";
-import https from "https";
-import fs from "fs";
-import userRouter from "./routes/User.mjs";
+// Importer les modules nécessaires
+import express from "express"; // Module express pour créer un serveur
+import https from "https"; // Module https pour créer un serveur HTTPS
+import fs from "fs"; // Module fs pour lire les fichiers
+import userRouter from "./routes/User.mjs"; // Contrôleur de authentification
+import { connectDB } from "./db/db.mjs"; // Fonction pour la connexion à la base de données
 
 const app = express();
+const PORT = 443;
+
+// Connecter à la base de données
+connectDB();
 
 // Utiliser les routes définies
 app.use("/", userRouter);
@@ -21,6 +26,6 @@ const options = {
 };
 
 // Démarrage du serveur sur le port 443
-https.createServer(options, app).listen(443, () => {
+https.createServer(options, app).listen(PORT, () => {
   console.log("Serveur HTTPS démarré sur le port 443");
 });

@@ -3,10 +3,10 @@ import userController from "../controllers/userController.mjs";
 
 const userRouter = express.Router();
 
-userRouter.get("/user", userController.authReq);
+userRouter.get("/api/users", userController.authReq);
 
-userRouter.get("/register", userController.createUser);
+userRouter.get("/register", userController.createUserHandler);
 
-userRouter.get("/login", userController.loginUser);
+userRouter.get("/login", userController.loginUserHandler);
 
 export default userRouter;
