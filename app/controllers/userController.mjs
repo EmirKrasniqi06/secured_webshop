@@ -1,3 +1,4 @@
+import { log } from "console";
 import { createUser, findUser } from "../db/db.mjs"; // Importer les fonctions de gestion des utilisateurs
 
 // Fonction de récupération de tous les utilisateurs
@@ -19,18 +20,13 @@ const createUserHandler = async (req, res) => {
 
 // Fonction de connection d'un utilisateur
 const loginUserHandler = async (req, res) => {
-  const { username, password } = req.body;
-  try {
-    const user = await findUser(username, password);
-    if (user) {
-      res.redirect("/auth?form=login");
-    } else {
-      res.status(400).send("Invalid Credentials");
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server Error");
-  }
+  console.log(req.body);
+
+  res
+    .status(200)
+    .sendFile("views/auth.html", { root: "./", formType: "login" });
+
+  // Créer deux page login et register
 };
 
 // Export des fonctions
