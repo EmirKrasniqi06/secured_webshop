@@ -1,5 +1,19 @@
 import mysql from "mysql2/promise";
 
+// Créer la table t_user si elle n'existe pas
+const createTableIfNotExists = async (connection) => {
+  const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS t_user (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      username VARCHAR(255) NOT NULL,
+      passwordHash VARCHAR(255) NOT NULL,
+      salt VARCHAR(255) NOT NULL,
+      createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  `;
+  await connection.execute(createTableQuery);
+};
+
 const connectDB = async () => {
   const connection = await mysql.createConnection({
     host: "localhost",
@@ -10,6 +24,9 @@ const connectDB = async () => {
   });
 
   console.log("MySQL connected...");
+
+  await createTableIfNotExists(connection);
+
   return connection;
 };
 

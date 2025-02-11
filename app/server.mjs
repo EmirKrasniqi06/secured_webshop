@@ -11,6 +11,9 @@ import path from "path"; // Module path pour gérer les chemins de fichiers
 import { fileURLToPath } from "url"; // Module fileURLToPath pour convertir les URL en chemins de fichiers
 import crypto from "crypto"; // Module crypto pour générer des chaînes aléatoires
 import bcrypt from "bcrypt"; // Module bcrypt pour hacher les mots de passe
+import dotenv from "dotenv"; // Module dotenv pour charger les variables d'environnement
+
+dotenv.config(); // Charger les variables d'environnement
 
 const app = express();
 const PORT = 443;
@@ -26,9 +29,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configuration de la session
+const secret =
+  process.env.SESSION_SECRET || crypto.randomBytes(64).toString("hex");
+
 app.use(
   session({
-    secret: crypto.randomBytes(64).toString("hex"),
+    secret: secret,
     resave: false,
     saveUninitialized: false,
   })
