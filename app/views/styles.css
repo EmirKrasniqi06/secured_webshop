@@ -1,10 +1,35 @@
 body {
   font-family: "Arial", sans-serif;
-  background-color: #f5f5f5;
-  color: #333;
   text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 h1 {
-  color: #0078d7;
+  text-align: center;
+  margin-top: 5%;
+}
+
+.form-title {
+  color: rgb(202, 202, 202);
+}
+
+.form-container {
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 3% 5%;
+  background-color: gray;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  color: rgb(202, 202, 202);
 }
