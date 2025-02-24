@@ -1,5 +1,6 @@
 import { createUser, findUser } from "../db/db.mjs"; // Importer les fonctions de gestion des utilisateurs
 import bcrypt from "bcrypt"; // Importer le module bcrypt pour le hachage du mot de passe
+import jwt from "jsonwebtoken"; // Importer le module jsonwebtoken pour créer des tokens JWT
 
 // Fonction de récupération de tous les utilisateurs
 const authReq = (req, res) => {
@@ -34,7 +35,7 @@ const createUserHandler = async (req, res) => {
   }
 };
 
-//  Fonction de connexion de l'utilisateur
+// Fonction de connexion de l'utilisateur
 const loginUserHandler = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -53,10 +54,23 @@ const loginUserHandler = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    res.status(200).json({
-      message: "Login successful",
-      user: { id: user.id, username: user.username },
-    });
+    // Générer un token JWT
+    const payload = {
+      id: user.id,
+      username: user.username,
+      isAdmin: user.isAdmin,
+    };
+    const secret = process.env.JWT_SECRET || "your_jwt_secret";
+    const options = {
+      expiresIn: "1h", // Le token expirera dans 1 heure
+    };
+    const token = jwt.sign(payload, secret, options);
+
+    // Définir le cookie JWT
+    res.cookie("jwt", token, { httpOnly: true, secure: true });
+
+    // Rediriger vers la page de profil
+    res.redirect("/profile");
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error });
   }

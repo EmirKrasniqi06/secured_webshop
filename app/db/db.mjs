@@ -1,4 +1,5 @@
 import mysql from "mysql2/promise";
+import bcrypt from "bcrypt";
 
 // Créer la table t_user si elle n'existe pas
 const createTableIfNotExists = async (connection) => {
@@ -8,6 +9,7 @@ const createTableIfNotExists = async (connection) => {
       username VARCHAR(255) NOT NULL,
       passwordHash VARCHAR(255) NOT NULL,
       salt VARCHAR(255) NOT NULL,
+      isAdmin BOOLEAN DEFAULT FALSE,
       createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
   `;
@@ -27,19 +29,45 @@ const connectDB = async () => {
 
   await createTableIfNotExists(connection);
 
+  await seedAdminUser(connection);
+
   return connection;
 };
 
-const createUser = async (username, password, salt) => {
+const seedAdminUser = async (connection) => {
+  const [rows] = await connection.execute(
+    "SELECT * FROM t_user WHERE username = ?",
+    ["admin"]
+  );
+
+  if (rows.length === 0) {
+    const username = "admin";
+    const password = "admin";
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
+    const passwordHash = await bcrypt.hash(password, salt);
+
+    const [result] = await connection.execute(
+      "INSERT INTO t_user (username, passwordHash, salt, isAdmin) VALUES (?, ?, ?, ?)",
+      [username, passwordHash, salt, true]
+    );
+
+    console.log("Admin user created with ID:", result.insertId);
+  } else {
+    console.log("Admin user already exists.");
+  }
+};
+
+const createUser = async (username, passwordHash, salt, isAdmin = false) => {
   const connection = await connectDB();
   const [result] = await connection.execute(
-    "INSERT INTO t_user (username, passwordHash, salt) VALUES (?, ?, ?)",
-    [username, password, salt]
+    "INSERT INTO t_user (username, passwordHash, salt, isAdmin) VALUES (?, ?, ?, ?)",
+    [username, passwordHash, salt, isAdmin]
   );
   return result;
 };
 
-const findUser = async (username, password) => {
+const findUser = async (username) => {
   const connection = await connectDB();
   const [rows] = await connection.execute(
     "SELECT * FROM t_user WHERE username = ?",
@@ -56,4 +84,10 @@ const findUserById = async (id) => {
   return rows[0];
 };
 
-export { connectDB, createUser, findUser, findUserById };
+const getAllUsers = async () => {
+  const connection = await connectDB();
+  const [rows] = await connection.execute("SELECT * FROM t_user");
+  return rows;
+};
+
+export { connectDB, createUser, findUser, findUserById, getAllUsers };

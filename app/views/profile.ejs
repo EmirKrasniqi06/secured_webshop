@@ -7,6 +7,44 @@
     <title>Profile</title>
   </head>
   <body>
-    <h1 class="title">Welcome, <%= name %>!</h1>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="/">Accueil</a></li>
+          <li><a href="/profile">Profil</a></li>
+          <li><a href="/settings">Paramètres</a></li>
+          <li><a href="/logout">Déconnexion</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h1 class="title">Welcome, <%= name %>!</h1>
+      <% if (users.length > 0) { %>
+      <h2>Liste des utilisateurs</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom d'utilisateur</th>
+            <th>Email</th>
+            <th>Admin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% users.forEach(user => { %>
+          <tr>
+            <td><%= user.id %></td>
+            <td><%= user.username %></td>
+            <td><%= user.email %></td>
+            <td><%= user.isAdmin %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } %>
+    </main>
+    <footer>
+      <p>&copy; 2025 Secured Webshop. Tous droits réservés.</p>
+    </footer>
   </body>
 </html>

@@ -1,9 +1,19 @@
-const auth = (req, res, next) => {
-  if (req.isAuthenticated && req.isAuthenticated()) {
-    return next();
+import jwt from "jsonwebtoken";
+
+const authenticateJWT = (req, res, next) => {
+  const token = req.cookies.jwt;
+  if (!token) {
+    return res.redirect("/login");
   }
-  console.log("User not authenticated");
-  res.redirect("/login");
+
+  try {
+    const secret = process.env.JWT_SECRET || "your_jwt_secret";
+    const decoded = jwt.verify(token, secret);
+    req.user = decoded;
+    next();
+  } catch (err) {
+    res.redirect("/login");
+  }
 };
 
-export default auth;
+export default authenticateJWT;
