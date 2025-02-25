@@ -14,9 +14,16 @@ const createUserHandler = async (req, res) => {
 
     // Validez les données ici (par exemple, vérifiez si le mot de passe est assez long, etc.)
     if (!username || !password) {
-      return res
-        .status(400)
-        .json({ message: "Username and password are required" });
+      return res.redirect(
+        "/register?error=Username and password are required !"
+      );
+    }
+
+    // Recherchez l'utilisateur dans la base de données
+    const existingUser = await findUser(username);
+
+    if (existingUser) {
+      return res.redirect("/register?error=Username already exists !");
     }
 
     // Hash du mot de passe
@@ -26,12 +33,10 @@ const createUserHandler = async (req, res) => {
     // Insérez l'utilisateur dans la base de données
     const result = await createUser(username, hashedPassword, salt);
 
-    res.status(201).json({
-      message: "User created successfully",
-      user: { id: result.insertId, username },
-    });
+    // Rediriger vers la page de login avec un message de succès
+    res.redirect("/login?success=User registered successfully! Please log in.");
   } catch (error) {
-    res.status(500).json({ message: "Error creating user", error });
+    res.redirect("/register?error=Error creating user");
   }
 };
 
@@ -44,14 +49,14 @@ const loginUserHandler = async (req, res) => {
     const user = await findUser(username);
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.redirect("/login?error=User not found !");
     }
 
     // Vérifiez le mot de passe
     const isMatch = await bcrypt.compare(password, user.passwordHash);
 
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.redirect("/login?error=Invalid credentials !");
     }
 
     // Générer un token JWT
@@ -72,7 +77,7 @@ const loginUserHandler = async (req, res) => {
     // Rediriger vers la page de profil
     res.redirect("/profile");
   } catch (error) {
-    res.status(500).json({ message: "Error logging in", error });
+    res.redirect("/login?error=Error logging in");
   }
 };
 

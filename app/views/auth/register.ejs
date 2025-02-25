@@ -8,8 +8,11 @@
   </head>
   <body>
     <div class="form-container">
-      <h1 class="form-title">Register</h1>
       <form action="/register" method="post">
+        <h1 class="form-title">Register</h1>
+        <% if (error) { %>
+        <p class="error-message"><%= error %></p>
+        <% } %>
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required />
         <br />

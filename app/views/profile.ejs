@@ -26,7 +26,6 @@
           <tr>
             <th>ID</th>
             <th>Nom d'utilisateur</th>
-            <th>Email</th>
             <th>Admin</th>
           </tr>
         </thead>
@@ -35,8 +34,11 @@
           <tr>
             <td><%= user.id %></td>
             <td><%= user.username %></td>
-            <td><%= user.email %></td>
-            <td><%= user.isAdmin %></td>
+            <% if (user.isAdmin == 0) { %>
+            <td>No</td>
+            <% } %> <% if (user.isAdmin == 1) { %>
+            <td>Yes</td>
+            <% } %>
           </tr>
           <% }) %>
         </tbody>
