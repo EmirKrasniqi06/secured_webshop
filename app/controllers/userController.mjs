@@ -1,4 +1,4 @@
-import { createUser, findUser } from "../db/db.mjs"; // Importer les fonctions de gestion des utilisateurs
+import { createUser, findUser, searchUsersInDB } from "../db/db.mjs"; // Importer les fonctions de gestion des utilisateurs
 import bcrypt from "bcrypt"; // Importer le module bcrypt pour le hachage du mot de passe
 import jwt from "jsonwebtoken"; // Importer le module jsonwebtoken pour créer des tokens JWT
 
@@ -81,5 +81,16 @@ const loginUserHandler = async (req, res) => {
   }
 };
 
+// Fonction de recherche des utilisateurs
+const searchUsers = async (search) => {
+  try {
+    const users = await searchUsersInDB(search);
+    return users;
+  } catch (error) {
+    console.error("Error searching users:", error); // Ajoutez un log pour l'erreur
+    throw error;
+  }
+};
+
 // Export des fonctions
-export default { authReq, createUserHandler, loginUserHandler };
+export default { authReq, createUserHandler, loginUserHandler, searchUsers };

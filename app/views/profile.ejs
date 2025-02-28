@@ -18,8 +18,17 @@
       </nav>
     </header>
     <main>
-      <h1 class="title">Welcome, <%= name %>!</h1>
+      <h1 class="title">Welcome, <span><%= name %>!</span></h1>
       <% if (users.length > 0) { %>
+      <form action="/profile" method="get" class="search-bar">
+        <input
+          type="text"
+          name="search"
+          placeholder="Rechercher un utilisateur"
+          value="<%= search %>"
+        />
+        <button type="submit">Rechercher</button>
+      </form>
       <h2>Liste des utilisateurs</h2>
       <table>
         <thead>

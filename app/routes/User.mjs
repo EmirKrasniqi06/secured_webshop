@@ -33,10 +33,11 @@ userRouter.post("/login", userController.loginUserHandler);
 // Route pour afficher la page de profil de l'utilisateur (protégée par le middleware d'authentification)
 userRouter.get("/profile", authenticateJWT, async (req, res) => {
   let users = [];
+  const search = req.query.search || "";
   if (req.user.isAdmin) {
-    users = await getAllUsers();
+    users = await userController.searchUsers(search);
   }
-  res.render("profile", { name: req.user.username, users });
+  res.render("profile", { name: req.user.username, users, search });
 });
 
 // Route pour gérer la déconnexion

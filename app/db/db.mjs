@@ -90,4 +90,20 @@ const getAllUsers = async () => {
   return rows;
 };
 
-export { connectDB, createUser, findUser, findUserById, getAllUsers };
+const searchUsersInDB = async (search) => {
+  const connection = await connectDB();
+  const [rows] = await connection.execute(
+    "SELECT * FROM t_user WHERE username LIKE ?",
+    [`%${search}%`]
+  );
+  return rows;
+};
+
+export {
+  connectDB,
+  createUser,
+  findUser,
+  findUserById,
+  getAllUsers,
+  searchUsersInDB,
+};
