@@ -90,7 +90,7 @@ const getAllUsers = async () => {
   return rows;
 };
 
-const searchUsersInDB = async (search) => {
+const searchByUsername = async (search) => {
   const connection = await connectDB();
   const [rows] = await connection.execute(
     "SELECT * FROM t_user WHERE username LIKE ?",
@@ -105,5 +105,5 @@ export {
   findUser,
   findUserById,
   getAllUsers,
-  searchUsersInDB,
+  searchByUsername,
 };

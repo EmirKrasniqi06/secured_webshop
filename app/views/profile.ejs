@@ -19,7 +19,6 @@
     </header>
     <main>
       <h1 class="title">Welcome, <span><%= name %>!</span></h1>
-      <% if (users.length > 0) { %>
       <form action="/profile" method="get" class="search-bar">
         <input
           type="text"
@@ -30,6 +29,7 @@
         <button type="submit">Rechercher</button>
       </form>
       <h2>Liste des utilisateurs</h2>
+      <% if (users.length > 0) { %>
       <table>
         <thead>
           <tr>
@@ -45,13 +45,15 @@
             <td><%= user.username %></td>
             <% if (user.isAdmin == 0) { %>
             <td>No</td>
-            <% } %> <% if (user.isAdmin == 1) { %>
+            <% } else { %>
             <td>Yes</td>
             <% } %>
           </tr>
           <% }) %>
         </tbody>
       </table>
+      <% } else { %>
+      <p class="message">Aucun utilisateur trouvé</p>
       <% } %>
     </main>
     <footer>

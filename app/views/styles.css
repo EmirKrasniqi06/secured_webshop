@@ -11,7 +11,13 @@ h1 {
 }
 
 span {
-  color: rgb(138, 0, 0);
+  color: rgb(167, 0, 0);
+}
+
+.message {
+  margin-top: 5%;
+  font-size: large;
+  color: red;
 }
 
 main {
