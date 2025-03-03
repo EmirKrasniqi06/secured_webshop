@@ -18,43 +18,53 @@
       </nav>
     </header>
     <main>
-      <h1 class="title">Welcome, <span><%= name %>!</span></h1>
-      <form action="/profile" method="get" class="search-bar">
-        <input
-          type="text"
-          name="search"
-          placeholder="Rechercher un utilisateur"
-          value="<%= search %>"
-        />
-        <button type="submit">Rechercher</button>
-      </form>
-      <h2>Liste des utilisateurs</h2>
-      <% if (users.length > 0) { %>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nom d'utilisateur</th>
-            <th>Admin</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% users.forEach(user => { %>
-          <tr>
-            <td><%= user.id %></td>
-            <td><%= user.username %></td>
-            <% if (user.isAdmin == 0) { %>
-            <td>No</td>
-            <% } else { %>
-            <td>Yes</td>
-            <% } %>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
-      <% } else { %>
-      <p class="message">Aucun utilisateur trouvé</p>
-      <% } %>
+      <div class="title-search-bar-container">
+        <h1 class="title">Welcome, <span><%= name %>!</span></h1>
+        <div class="user-info">
+          <p>Username: <%= name %></p>
+          <p>Password: ********</p>
+        </div>
+        <% users.forEach(user => { %> <% if (user.isAdmin == 1) { %>
+        <form action="/profile" method="get" class="search-bar">
+          <input
+            type="text"
+            name="search"
+            placeholder="Rechercher un utilisateur"
+            value="<%= search %>"
+          />
+          <button type="submit">Rechercher</button>
+        </form>
+      </div>
+      <div class="users-list">
+        <h2>Liste des utilisateurs</h2>
+        <% if (users.length > 0) { %>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nom d'utilisateur</th>
+              <th>Admin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% users.forEach(user => { %>
+            <tr>
+              <td><%= user.id %></td>
+              <td><%= user.username %></td>
+              <% if (user.isAdmin == 0) { %>
+              <td>No</td>
+              <% } else { %>
+              <td>Yes</td>
+              <% } %>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } else { %>
+        <p class="message">Aucun utilisateur trouvé</p>
+        <% } %>
+      </div>
+      <% } %> <% }) %>
     </main>
     <footer>
       <p>&copy; 2025 Secured Webshop. Tous droits réservés.</p>

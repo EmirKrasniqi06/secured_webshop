@@ -11,6 +11,11 @@ const userRouter = express.Router();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Route / qui redirige vers la page profil
+userRouter.get("/", (req, res) => {
+  res.redirect("/profile");
+});
+
 // Route pour afficher le formulaire d'inscription
 userRouter.get("/register", (req, res) => {
   const error = req.query.error;

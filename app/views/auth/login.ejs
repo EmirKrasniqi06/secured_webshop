@@ -3,27 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="styles-forms.css" />
     <title>Login</title>
   </head>
   <body>
-    <div class="form-container">
-      <form action="/login" method="post" class="form">
-        <h1 class="form-title">Login</h1>
+    <div class="box">
+      <form action="/login" method="post" autocomplete="off">
+        <h2>Login</h2>
         <% if (successMessage) { %>
         <p class="success-message"><%= successMessage %></p>
         <% } %> <% if (error) { %>
         <p class="error-message"><%= error %></p>
         <% } %>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required />
-        <br />
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required />
-        <br />
-        <button type="submit">Login</button>
-        <br />
-        <a href="/register">Register</a>
+        <div class="inputBox">
+          <input type="text" name="username" required="required" />
+          <a>Username</a>
+          <i></i>
+        </div>
+        <div class="inputBox">
+          <input type="password" name="password" required="required" />
+          <a>Password</a>
+          <i></i>
+        </div>
+        <input type="submit" value="Login" />
+        <div class="links">
+          <a href="/register">Sign up</a>
+        </div>
       </form>
     </div>
   </body>

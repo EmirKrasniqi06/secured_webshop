@@ -3,33 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="styles-forms.css" />
     <title>Register</title>
   </head>
   <body>
-    <div class="form-container">
-      <form action="/register" method="post" class="form">
-        <h1 class="form-title">Register</h1>
+    <div class="box">
+      <form action="/register" method="post" autocomplete="off">
+        <h2>Register</h2>
         <% if (error) { %>
         <p class="error-message"><%= error %></p>
         <% } %>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required />
-        <br />
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required />
-        <br />
-        <label for="password">Confirm password:</label>
-        <input
-          type="password"
-          id="confirm-password"
-          name="confirm-password"
-          required
-        />
-        <br />
-        <button type="submit">Register</button>
-        <br />
-        <a href="/login">Login</a>
+        <div class="inputBox">
+          <input type="text" name="username" required="required" />
+          <a>Username</a>
+          <i></i>
+        </div>
+        <div class="inputBox">
+          <input type="password" name="password" required="required" />
+          <a>Password</a>
+          <i></i>
+        </div>
+        <div class="inputBox">
+          <input type="password" name="confirm-password" required="required" />
+          <a>Confirm Password</a>
+          <i></i>
+        </div>
+        <input type="submit" value="Register" />
+        <div class="links">
+          <a href="/login">Login</a>
+        </div>
       </form>
     </div>
   </body>

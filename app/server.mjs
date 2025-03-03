@@ -33,6 +33,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // Middleware pour servir les fichiers statiques
 app.use(express.static("views"));
+app.use(express.static("views/auth"));
 
 // Utiliser les routes définies
 app.use("/", userRouter);
