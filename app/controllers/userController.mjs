@@ -10,20 +10,25 @@ const authReq = (req, res) => {
 // Fonction de création de l'utilisateur
 const createUserHandler = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, confirmPassword } = req.body;
 
     // Validez les données ici (par exemple, vérifiez si le mot de passe est assez long, etc.)
-    if (!username || !password) {
+    if (!username || !password || !confirmPassword) {
       return res.redirect(
-        "/register?error=Username and password are required !"
+        "/register?error=Username, password, and confirmation are required!"
       );
+    }
+
+    // Vérifiez si le mot de passe et sa confirmation sont égaux
+    if (password !== confirmPassword) {
+      return res.redirect("/register?error=Passwords do not match!");
     }
 
     // Recherchez l'utilisateur dans la base de données
     const existingUser = await findUser(username);
 
     if (existingUser) {
-      return res.redirect("/register?error=Username already exists !");
+      return res.redirect("/register?error=Username already exists!");
     }
 
     // Hash du mot de passe

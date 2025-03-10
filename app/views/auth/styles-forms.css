@@ -28,10 +28,14 @@ main {
 }
 
 .success-message {
+  position: absolute;
+  top: 90px;
   color: #00ff00;
 }
 
 .error-message {
+  position: absolute;
+  top: 90px;
   color: #ff0000;
 }
 
@@ -39,10 +43,17 @@ main {
 .box {
   position: relative;
   width: 380px;
-  height: 500px;
   background: #1c1c1c;
   border-radius: 8px;
   overflow: hidden;
+}
+
+.login-box {
+  height: 430px;
+}
+
+.register-box {
+  height: 530px;
 }
 
 .box::before {
@@ -90,7 +101,7 @@ form {
   z-index: 2;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centrer les éléments horizontalement */
+  align-items: center;
 }
 
 h2 {
@@ -103,7 +114,7 @@ h2 {
 .inputBox {
   position: relative;
   width: 300px;
-  margin-top: 35px;
+  margin-top: 45px;
 }
 
 .inputBox input {
@@ -160,7 +171,7 @@ h2 {
 
 .links {
   display: flex;
-  justify-content: center; /* Centrer les liens horizontalement */
+  justify-content: center;
   width: 100%;
   margin-top: 10px;
 }

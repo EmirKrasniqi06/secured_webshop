@@ -6,3 +6,4 @@ const redirectIfAuthenticated = (req, res, next) => {
 };
 
 export default redirectIfAuthenticated;
+
